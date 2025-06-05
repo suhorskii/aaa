@@ -2,105 +2,262 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>ScarlingBox | BoxPVP</title>
+  <title>ForestBox - Minecraft BoxPVP</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #121212;
-      color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      background: url('https://i.imgur.com/SQcQgAT.png') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
       text-align: center;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
+
+    /* === Краплі === */
+    .drop {
+      position: fixed;
+      top: -20px;
+      width: 4px;
+      height: 14px;
+      background: rgba(0, 188, 212, 0.5);
+      border-radius: 50%;
+      animation: fall linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    /* Інші стилі (твій код) */
     header {
+      background: rgba(0, 0, 0, 0.7);
       padding: 30px;
-      background: #1a1a1a;
+      z-index: 2;
       position: relative;
     }
+
     h1 {
-      color: #ff6600;
       font-size: 3em;
-      margin: 0;
+      color: #00ff00;
     }
-    h2 {
-      color: #ffae42;
-      margin: 10px 0 20px;
-    }
+
     .ip {
-      background: #333;
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+
+    .tabs {
+      margin-top: 40px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .tab-button {
       padding: 10px 20px;
-      display: inline-block;
-      margin-top: 10px;
-      border-radius: 8px;
-      font-size: 1.2em;
-    }
-    .socials {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-    .socials a {
-      margin-left: 10px;
-      color: #ffa200;
-      text-decoration: none;
+      margin: 5px;
+      background: #00cc66;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
       font-weight: bold;
     }
-    .socials a:hover {
-      color: #ffcf70;
-    }
-    .buttons {
-      margin-top: 50px;
-    }
-    .button {
-      display: inline-block;
-      margin: 10px;
-      padding: 15px 25px;
-      background: #ffa200;
-      color: black;
-      text-decoration: none;
+
+    .tab-content {
+      display: none;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7);
       border-radius: 10px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    .button:hover {
-      background: #ffcf70;
-    }
-    .rain {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background-image: url('https://i.imgur.com/NM4J88a.gif');
-      opacity: 0.2;
-      z-index: 1;
-    }
-    .content {
+      margin: 20px auto;
+      max-width: 800px;
+      text-align: left;
       position: relative;
       z-index: 2;
     }
-  </style>
-</head>
-<body>
-  <div class="rain"></div>
-  <div class="content">
-    <header>
-      <div class="socials">
-        <a href="https://youtube.com">YouTube</a>
-        <a href="https://discord.com">Discord</a>
-        <a href="https://instagram.com">Instagram</a>
-      </div>
-      <h1>SCARLINGBOX</h1>
-      <h2>BOXPVP СЕРВЕР</h2>
-      <div class="ip">IP: scarlingbox.hypixels.pl | Версия: 1.16.5</div>
-    </header>
 
-    <div class="buttons">
-      <a href="https://donatello.to/scarlingbox" class="button">КУПИТЬ ДОНАТ</a>
-      <a href="https://donatello.to/scarlingbox" class="button">КУПИТЬ КИТЫ</a>
-      <a href="https://donatello.to/scarlingbox" class="button">КУПИТЬ СУХАРИКИ</a>
+    .tab-content.active {
+      display: block;
+    }
+
+    .tab-content h2 {
+      color: #00ffcc;
+    }
+
+    .donate-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .donate-item {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 10px;
+      width: 200px;
+      text-align: center;
+    }
+
+    .donate-item img {
+      width: 150px;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .donate-item b {
+      display: block;
+      margin: 10px 0;
+    }
+
+    .donate-item a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #00cc66;
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      z-index: 2;
+    }
+
+    .socials a {
+      margin: 0 10px;
+      color: white;
+      font-size: 20px;
+      text-decoration: none;
+    }
+
+    .footer-ip {
+      margin-top: 10px;
+      font-size: 1.2em;
+    }
+  </style>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      showTab('kits'); // Якщо 'kits' нема — змінити на 'donates' або інший
+    });
+
+    // === Створення крапель ===
+    function createDrop() {
+      const drop = document.createElement('div');
+      drop.classList.add('drop');
+      drop.style.left = Math.random() * window.innerWidth + 'px';
+      drop.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+      document.body.appendChild(drop);
+      setTimeout(() => drop.remove(), 4000);
+    }
+
+    setInterval(createDrop, 100);
+  </script>
+</head>
+
+<body>
+
+<header>
+  <h1>ForestBox</h1>
+
+</header>
+
+<div class="tabs">
+  <button class="tab-button" onclick="showTab('donates')">Донаты</button>
+  <button class="tab-button" onclick="showTab('suhariki')">Сухарики</button>
+  <button class="tab-button" onclick="showTab('rules')">Правила сервера</button>
+</div>
+
+<div id="donates" class="tab-content">
+  <h2>Донаты</h2>
+  <div class="donate-links">
+    <div class="donate-item">
+      <b>Pixel</b>
+      <b>25грн</b>
+      <a href="https://send.monobank.ua/jar/9Wmu4EN7Ut?a=25" target="_blank">купить</a>
+    </div>
+    <div class="donate-item">
+      <b>Magister</b>
+      <b>40грн</b>
+      <a href="https://send.monobank.ua/jar/A62xQvyyWo?a=40" target="_blank">купить</a>
+    </div>
+    <div class="donate-item">
+      <b>Space</b>
+      <b>100грн</b>
+      <a href="https://donatello.to/ForestBox?a=100" target="_blank">купить</a>
+    </div>
+    <div class="donate-item">
+      <b>Forest</b>
+      <b>170грн</b>
+      <a href="https://donatello.to/ForestBox?a=170" target="_blank">купить</a>
+    </div>
+    <div class="donate-item">
+      <b>Legenda</b>
+      <b>250грн</b>
+      <a href="https://donatello.to/ForestBox?a=250" target="_blank">купить</a>
     </div>
   </div>
+</div>
+
+<div id="suhariki" class="tab-content">
+  <h2>Сухарики</h2>
+  <div class="donate-links">
+    <div class="donate-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/%D0%9F%D1%88%D0%B5%D0%BD%D0%B8%D1%87%D0%BD%D1%8B%D0%B5_%D1%81%D1%83%D1%85%D0%B0%D1%80%D0%B8%D0%BA%D0%B8.jpg" alt="Сухарики">
+      <b>Сухарики (дон валюта)</b>
+      <b>1грн (2 сухарика)</b>
+      <a href="https://send.monobank.ua/jar/2FF51A5b6W" target="_blank">купить</a>
+    </div>
+  </div>
+</div>
+
+<div id="rules" class="tab-content">
+  <h2>Правила сервера</h2>
+  <ul>
+    <li>1. Использование читов запрещено! <b>Наказание: 20 дней бана</b></li>
+    <li>1.1. Хранение читов тоже запрещено (если вы использовали читы менее чем 21 день назад) — <b>17 дней бана</b></li>
+    <li>1.2. Уход от проверки разными способами запрещен — <b>17 дней бана</b></li>
+    <li>1.3. Отказ от проверки — <b>17 дней бана</b></li>
+    <li>1.4. Ввод в заблуждение, троллинг, ложные папки, оскорбления — <b>17 дней бана</b></li>
+    <li>1.5. Выебываться на проверке запрещено — <b>17 дней бана</b></li>
+    <li>2. Попытка нанести вред серверу — <b>бан навсегда</b></li>
+    <li>3. Обман игроков — <b>20 дней бана</b></li>
+    <li>4. Убийство 3х1 и более — <b>6 часов бана всем, повторное нарушение +6 часов</b></li>
+    <li>5. Игра с 3 и более аккаунтов одновременно — <b>7 дней бана на каждый, кроме основного</b></li>
+    <li>6. Мешать новичкам развиваться — <b>6 часов бана</b></li>
+  </ul>
+</div>
+
+<footer>
+  <div class="socials">
+    <a href="https://t.me/твій_телеграм" target="_blank">Telegram</a>
+<a href="https://discord.gg/твій_дискорд" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: red; color: white; font-weight: bold; text-decoration: none; border-radius: 5px;">
+ наш дискорд канал
+</a>
+    <a href="https://instagram.com/твій_інстаграм" target="_blank">Instagram</a>
+  </div>
+  <div class="footer-ip">ВНИМАНИЯ перед покупкой укажите свой ник и донат (количество)</div>
+  <div class="footer-ip">если вы не укажите донат не проидет</div>
+  <div class="footer-ip">IP сервера: <b>ForestBox.gomc.fun</b> | Версия: 1.16.5</div>
+</footer>
+
 </body>
 </html>
