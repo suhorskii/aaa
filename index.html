@@ -9,10 +9,12 @@
       font-family: Arial, sans-serif;
       background: url('https://i.imgur.com/SQcQgAT.png') no-repeat center center fixed;
       background-size: cover;
+      background-position: center;
       color: white;
       text-align: center;
       overflow-x: hidden;
       overflow-y: auto;
+      transition: background-position 0.2s ease;
     }
 
     .drop {
@@ -45,11 +47,6 @@
       color: #00ff00;
     }
 
-    .ip {
-      font-size: 1.5em;
-      margin-top: 20px;
-    }
-
     .tabs {
       margin-top: 40px;
       z-index: 2;
@@ -64,6 +61,11 @@
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
+      transition: transform 0.3s ease; /* для плавного збільшення */
+    }
+
+    .tab-button:hover {
+      transform: scale(1.1); /* збільшення при наведенні */
     }
 
     .tab-content {
@@ -177,6 +179,13 @@
     }
 
     setInterval(createDrop, 100);
+
+    // === 3D рух фону при русі мишки ===
+    document.addEventListener('mousemove', function(e) {
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      document.body.style.backgroundPosition = `${50 + (x - 0.5) * 10}% ${50 + (y - 0.5) * 10}%`;
+    });
   </script>
 </head>
 
@@ -195,31 +204,11 @@
 <div id="donates" class="tab-content">
   <h2>Донаты</h2>
   <div class="donate-links">
-    <div class="donate-item">
-      <b>Pixel</b>
-      <b>25грн</b>
-      <a href="https://send.monobank.ua/jar/9Wmu4EN7Ut?a=25" target="_blank">купить</a>
-    </div>
-    <div class="donate-item">
-      <b>Magister</b>
-      <b>40грн</b>
-      <a href="https://send.monobank.ua/jar/A62xQvyyWo?a=40" target="_blank">купить</a>
-    </div>
-    <div class="donate-item">
-      <b>Space</b>
-      <b>100грн</b>
-      <a href="https://donatello.to/ForestBox?a=100" target="_blank">купить</a>
-    </div>
-    <div class="donate-item">
-      <b>Forest</b>
-      <b>170грн</b>
-      <a href="https://donatello.to/ForestBox?a=170" target="_blank">купить</a>
-    </div>
-    <div class="donate-item">
-      <b>Legenda</b>
-      <b>250грн</b>
-      <a href="https://donatello.to/ForestBox?a=250" target="_blank">купить</a>
-    </div>
+    <div class="donate-item"><b>Pixel</b><b>25грн</b><a href="https://send.monobank.ua/jar/9Wmu4EN7Ut?a=25" target="_blank">купить</a></div>
+    <div class="donate-item"><b>Magister</b><b>40грн</b><a href="https://send.monobank.ua/jar/A62xQvyyWo?a=40" target="_blank">купить</a></div>
+    <div class="donate-item"><b>Space</b><b>100грн</b><a href="https://donatello.to/ForestBox?a=100" target="_blank">купить</a></div>
+    <div class="donate-item"><b>Forest</b><b>170грн</b><a href="https://donatello.to/ForestBox?a=170" target="_blank">купить</a></div>
+    <div class="donate-item"><b>Legenda</b><b>250грн</b><a href="https://donatello.to/ForestBox?a=250" target="_blank">купить</a></div>
   </div>
 </div>
 
@@ -239,16 +228,16 @@
   <h2>Правила сервера</h2>
   <ul>
     <li>1. Использование читов запрещено! <b>Наказание: 20 дней бана</b></li>
-    <li>1.1. Хранение читов тоже запрещено (если вы использовали читы менее чем 21 день назад) — <b>17 дней бана</b></li>
-    <li>1.2. Уход от проверки разными способами запрещен — <b>17 дней бана</b></li>
+    <li>1.1. Хранение читов тоже запрещено — <b>17 дней бана</b></li>
+    <li>1.2. Уход от проверки запрещен — <b>17 дней бана</b></li>
     <li>1.3. Отказ от проверки — <b>17 дней бана</b></li>
-    <li>1.4. Ввод в заблуждение, троллинг, ложные папки, оскорбления — <b>17 дней бана</b></li>
+    <li>1.4. Ложные папки, оскорбления — <b>17 дней бана</b></li>
     <li>1.5. Выебываться на проверке запрещено — <b>17 дней бана</b></li>
     <li>2. Попытка нанести вред серверу — <b>бан навсегда</b></li>
     <li>3. Обман игроков — <b>20 дней бана</b></li>
-    <li>4. Убийство 3х1 и более — <b>6 часов бана всем, повторное нарушение +6 часов</b></li>
-    <li>5. Игра с 3 и более аккаунтов одновременно — <b>7 дней бана на каждый, кроме основного</b></li>
-    <li>6. Мешать новичкам развиваться — <b>6 часов бана</b></li>
+    <li>4. Убийство 3х1 и более — <b>6ч бана всем</b></li>
+    <li>5. Игра с 3+ аккаунтов — <b>7 дней бана</b></li>
+    <li>6. Мешать новичкам — <b>6 часов бана</b></li>
   </ul>
 </div>
 
