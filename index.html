@@ -15,7 +15,6 @@
       overflow-y: auto;
     }
 
-    /* === Краплі === */
     .drop {
       position: fixed;
       top: -20px;
@@ -34,7 +33,6 @@
       }
     }
 
-    /* Інші стилі (твій код) */
     header {
       background: rgba(0, 0, 0, 0.7);
       padding: 30px;
@@ -69,8 +67,11 @@
     }
 
     .tab-content {
-      display: none;
-      padding: 20px;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.5s ease, max-height 0.5s ease;
+      padding: 0 20px;
       background: rgba(0, 0, 0, 0.7);
       border-radius: 10px;
       margin: 20px auto;
@@ -78,10 +79,14 @@
       text-align: left;
       position: relative;
       z-index: 2;
+      pointer-events: none;
     }
 
     .tab-content.active {
-      display: block;
+      opacity: 1;
+      max-height: 2000px;
+      padding: 20px;
+      pointer-events: auto;
     }
 
     .tab-content h2 {
@@ -148,22 +153,20 @@
   </style>
 
   <script>
-function showTab(tabId) {
-  document.querySelectorAll('.tab-content').forEach(tab => {
-    tab.classList.remove('active');
-  });
-  const activeTab = document.getElementById(tabId);
-  if (activeTab) {
-    activeTab.classList.add('active');
-  }
-}
-
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      const activeTab = document.getElementById(tabId);
+      if (activeTab) {
+        activeTab.classList.add('active');
+      }
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
-      showTab('kits'); // Якщо 'kits' нема — змінити на 'donates' або інший
+      showTab('donates');
     });
 
-    // === Створення крапель ===
     function createDrop() {
       const drop = document.createElement('div');
       drop.classList.add('drop');
@@ -181,7 +184,6 @@ function showTab(tabId) {
 
 <header>
   <h1>ForestBox</h1>
-
 </header>
 
 <div class="tabs">
@@ -253,9 +255,9 @@ function showTab(tabId) {
 <footer>
   <div class="socials">
     <a href="https://t.me/твій_телеграм" target="_blank">Telegram</a>
-<a href="https://discord.gg/u8HFAf9kdv" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: red; color: white; font-weight: bold; text-decoration: none; border-radius: 5px;">
- наш дискорд канал
-</a>
+    <a href="https://discord.gg/u8HFAf9kdv" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: red; color: white; font-weight: bold; text-decoration: none; border-radius: 5px;">
+      наш дискорд канал
+    </a>
     <a href="https://instagram.com/твій_інстаграм" target="_blank">Instagram</a>
   </div>
   <div class="footer-ip">ВНИМАНИЯ перед покупкой укажите свой ник и донат (количество)</div>
