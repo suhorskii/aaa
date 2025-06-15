@@ -61,11 +61,11 @@
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
-      transition: transform 0.3s ease; /* для плавного збільшення */
+      transition: transform 0.3s ease;
     }
 
     .tab-button:hover {
-      transform: scale(1.1); /* збільшення при наведенні */
+      transform: scale(1.1);
     }
 
     .tab-content {
@@ -125,11 +125,17 @@
       display: inline-block;
       margin-top: 10px;
       padding: 10px 20px;
-      background: #00cc66;
-      color: black;
+      background: black;
+      color: white;
       font-weight: bold;
       text-decoration: none;
       border-radius: 5px;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .donate-item a:hover {
+      transform: scale(1.1);
+      color: #00ff66;
     }
 
     footer {
@@ -180,11 +186,11 @@
 
     setInterval(createDrop, 100);
 
-    // === 3D рух фону при русі мишки ===
+    // 3D рух фону
     document.addEventListener('mousemove', function(e) {
-      const x = e.clientX / window.innerWidth;
-      const y = e.clientY / window.innerHeight;
-      document.body.style.backgroundPosition = `${50 + (x - 0.5) * 10}% ${50 + (y - 0.5) * 10}%`;
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      document.body.style.backgroundPosition = `${50 + x}% ${50 + y}%`;
     });
   </script>
 </head>
