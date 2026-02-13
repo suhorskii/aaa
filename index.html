@@ -6,7 +6,6 @@
     <title>ShellBag Aesthetics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ВЕСЬ ТВІЙ СТИЛЬ ЗАЛИШАЄТЬСЯ ТУТ */
         body {
             margin: 0;
             padding: 0;
@@ -56,6 +55,7 @@
             border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.25);
             box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            transition: all 0.3s ease;
         }
 
         h1 {
@@ -75,6 +75,7 @@
             padding-left: 20px;
             background: rgba(255,255,255,0.05);
             border-radius: 0 30px 30px 0;
+            line-height: 1.6;
         }
 
         .details {
@@ -84,6 +85,7 @@
             border-radius: 30px;
             padding: 30px;
             margin: 30px 0;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.4);
         }
 
         .details pre {
@@ -96,6 +98,7 @@
             padding: 20px;
             border-radius: 20px;
             border: 1px solid #3e6b7e;
+            text-shadow: 0 2px 5px black;
         }
 
         .button-group {
@@ -123,6 +126,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
             text-decoration: none;
+            letter-spacing: 0.5px;
         }
 
         .glass-btn i {
@@ -143,11 +147,21 @@
             padding: 18px 45px;
         }
 
-        .btn-telegram { background: rgba(0, 136, 204, 0.3); }
-        .btn-discord { background: rgba(88, 101, 242, 0.3); }
-        .btn-github { background: rgba(36, 41, 46, 0.4); }
-        .btn-twitter { background: rgba(29, 161, 242, 0.3); }
-        .btn-instagram { background: rgba(225, 48, 108, 0.3); }
+        .btn-telegram {
+            background: rgba(0, 136, 204, 0.3);
+        }
+        .btn-discord {
+            background: rgba(88, 101, 242, 0.3);
+        }
+        .btn-github {
+            background: rgba(36, 41, 46, 0.4);
+        }
+        .btn-twitter {
+            background: rgba(29, 161, 242, 0.3);
+        }
+        .btn-instagram {
+            background: rgba(225, 48, 108, 0.3);
+        }
 
         .footer-note {
             margin-top: 40px;
@@ -193,27 +207,28 @@
         </div>
 
         <div class="button-group">
-            <button class="glass-btn btn-download" id="downloadBtn">
-                <i class="fas fa-cloud-download-alt"></i> Скачать .bag
-            </button>
+            <!-- КНОПКА ТЕПЕР ПРОСТО ВЕДЕ НА ТВІЙ GITHUB -->
+            <a href="https://drive.google.com/file/d/1XDIvQxUuQnm40blzkWMyELbCJkzgXdyB/view?pli=1" target="_blank" class="glass-btn btn-download" id="downloadBtn">
+                <i class="fas fa-cloud-download-alt"></i> Скачать shellbag
+            </a>
         </div>
 
         <div class="button-group" style="justify-content: space-around;">
             <a href="#" class="glass-btn btn-telegram" target="_blank"><i class="fab fa-telegram-plane"></i> Telegram</a>
             <a href="#" class="glass-btn btn-discord" target="_blank"><i class="fab fa-discord"></i> Discord</a>
-            <a href="#" class="glass-btn btn-github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://drive.google.com/file/d/1XDIvQxUuQnm40blzkWMyELbCJkzgXdyB/view?pli=1" class="glass-btn btn-github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
             <a href="#" class="glass-btn btn-twitter" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
             <a href="#" class="glass-btn btn-instagram" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
         </div>
 
         <div class="footer-note">
-            ✦ эстетика дождя и стекла ✦ shellbag memory ✦
+            ✦ естетика дощу та скла ✦ shellbag memory ✦
         </div>
     </div>
 
     <script>
         (function() {
-            // ДОЖДЬ
+            // ДОЩ
             const rainContainer = document.getElementById('rain');
             for (let i = 0; i < 100; i++) {
                 const drop = document.createElement('div');
@@ -224,38 +239,6 @@
                 drop.style.opacity = 0.2 + Math.random() * 0.3;
                 rainContainer.appendChild(drop);
             }
-
-            // СКАЧУВАННЯ ФАЙЛУ (ДЛЯ GITHUB)
-            function downloadBagFile() {
-                // ⚡⚡⚡ ТУТ ТРЕБА ВСТАВИТИ СВІЙ ШЛЯХ ⚡⚡⚡
-                // Варіант А: файл в тому ж репозиторії
-                const filePath = 'shellbag';  // або 'shellbag.dat' якщо є розширення
-                
-                // Варіант Б: або пряме посилання з GitHub (закоментовано)
-                // const filePath = 'https://raw.githubusercontent.com/ТВІЙ_ЛОГІН/НАЗВА_РЕПО/БРАНЧ/ІМЯ_ФАЙЛУ';
-                
-                fetch(filePath)
-                    .then(response => {
-                        if (!response.ok) throw new Error('Файл не знайдено');
-                        return response.blob();
-                    })
-                    .then(blob => {
-                        const url = window.URL.createObjectURL(blob);
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = 'shellbag_export.dat';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                        window.URL.revokeObjectURL(url);
-                    })
-                    .catch(error => {
-                        alert('Файл shellbag не знайдено! Переконайся, що він є в репозиторії GitHub.');
-                        console.error(error);
-                    });
-            }
-
-            document.getElementById('downloadBtn').addEventListener('click', downloadBagFile);
         })();
     </script>
 </body>
