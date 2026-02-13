@@ -1,247 +1,262 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>ForestBox - Minecraft BoxPVP</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('https://i.imgur.com/SQcQgAT.png') no-repeat center center fixed;
-      background-size: cover;
-      background-position: center;
-      color: white;
-      text-align: center;
-      overflow-x: hidden;
-      overflow-y: auto;
-      transition: background-position 0.2s ease;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShellBag Aesthetics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ВЕСЬ ТВІЙ СТИЛЬ ЗАЛИШАЄТЬСЯ ТУТ */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(circle at 20% 30%, #1a3a4a, #0b1a24);
+            position: relative;
+            overflow-x: hidden;
+            color: #e0f0ff;
+        }
 
-    .drop {
-      position: fixed;
-      top: -20px;
-      width: 4px;
-      height: 14px;
-      background: rgba(0, 188, 212, 0.5);
-      border-radius: 50%;
-      animation: fall linear infinite;
-      z-index: 0;
-    }
+        .rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
 
-    @keyframes fall {
-      to {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
-    }
+        .raindrop {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(transparent, rgba(255, 255, 255, 0.6));
+            border-radius: 0 0 5px 5px;
+            animation: fall linear infinite;
+            opacity: 0.4;
+        }
 
-    header {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      z-index: 2;
-      position: relative;
-    }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
 
-    h1 {
-      font-size: 3em;
-      color: #00ff00;
-    }
+        .glass-container {
+            position: relative;
+            z-index: 10;
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 40px;
+            background: rgba(20, 40, 50, 0.25);
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        }
 
-    .tabs {
-      margin-top: 40px;
-      z-index: 2;
-      position: relative;
-    }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.2rem;
+            font-weight: 400;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
 
-    .tab-button {
-      padding: 10px 20px;
-      margin: 5px;
-      background: #00cc66;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: transform 0.3s ease;
-    }
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 0;
+            margin-bottom: 2rem;
+            border-left: 3px solid #8ec9e0;
+            padding-left: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 0 30px 30px 0;
+        }
 
-    .tab-button:hover {
-      transform: scale(1.1);
-    }
+        .details {
+            background: rgba(10, 20, 25, 0.5);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            padding: 30px;
+            margin: 30px 0;
+        }
 
-    .tab-content {
-      opacity: 0;
-      max-height: 0;
-      overflow: hidden;
-      transition: opacity 0.5s ease, max-height 0.5s ease;
-      padding: 0 20px;
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 10px;
-      margin: 20px auto;
-      max-width: 800px;
-      text-align: left;
-      position: relative;
-      z-index: 2;
-      pointer-events: none;
-    }
+        .details pre {
+            color: #c0e4ff;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background: rgba(0, 10, 15, 0.6);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid #3e6b7e;
+        }
 
-    .tab-content.active {
-      opacity: 1;
-      max-height: 2000px;
-      padding: 20px;
-      pointer-events: auto;
-    }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0 20px;
+            justify-content: center;
+        }
 
-    .tab-content h2 {
-      color: #00ffcc;
-    }
+        .glass-btn {
+            padding: 14px 30px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+        }
 
-    .donate-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
+        .glass-btn i {
+            font-size: 1.4rem;
+        }
 
-    .donate-item {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 10px;
-      width: 200px;
-      text-align: center;
-    }
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+            border-color: #b0e6ff;
+            box-shadow: 0 15px 30px rgba(0, 150, 200, 0.4);
+        }
 
-    .donate-item img {
-      width: 150px;
-      height: auto;
-      border-radius: 5px;
-    }
+        .btn-download {
+            background: rgba(70, 130, 180, 0.5);
+            border: 1px solid #8ec9e0;
+            font-size: 1.5rem;
+            padding: 18px 45px;
+        }
 
-    .donate-item b {
-      display: block;
-      margin: 10px 0;
-    }
+        .btn-telegram { background: rgba(0, 136, 204, 0.3); }
+        .btn-discord { background: rgba(88, 101, 242, 0.3); }
+        .btn-github { background: rgba(36, 41, 46, 0.4); }
+        .btn-twitter { background: rgba(29, 161, 242, 0.3); }
+        .btn-instagram { background: rgba(225, 48, 108, 0.3); }
 
-    .donate-item a {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: black;
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
+        .footer-note {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            background: rgba(0,0,0,0.2);
+            border-radius: 40px;
+            padding: 10px;
+        }
 
-    .donate-item a:hover {
-      transform: scale(1.1);
-      color: #00ff66;
-    }
-
-    footer {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      z-index: 2;
-    }
-
-    .socials a {
-      margin: 0 10px;
-      color: white;
-      font-size: 20px;
-      text-decoration: none;
-    }
-
-    .footer-ip {
-      margin-top: 10px;
-      font-size: 1.2em;
-    }
-  </style>
-
-  <script>
-    function showTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.remove('active');
-      });
-      const activeTab = document.getElementById(tabId);
-      if (activeTab) {
-        activeTab.classList.add('active');
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      showTab('donates');
-    });
-
-    function createDrop() {
-      const drop = document.createElement('div');
-      drop.classList.add('drop');
-      drop.style.left = Math.random() * window.innerWidth + 'px';
-      drop.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-      document.body.appendChild(drop);
-      setTimeout(() => drop.remove(), 4000);
-    }
-
-    setInterval(createDrop, 100);
-
-    // 3D рух фону
-    document.addEventListener('mousemove', function(e) {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20;
-      const y = (e.clientY / window.innerHeight - 0.5) * 20;
-      document.body.style.backgroundPosition = `${50 + x}% ${50 + y}%`;
-    });
-  </script>
+        @media (max-width: 700px) {
+            .glass-container { margin: 20px; padding: 25px; }
+            h1 { font-size: 2.2rem; }
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-  <h1>ForestBox</h1>
-</header>
+    <div class="rain" id="rain"></div>
 
-<div class="tabs">
-  <button class="tab-button" onclick="showTab('donates')">Донаты</button>
-  <button class="tab-button" onclick="showTab('suhariki')">Forestcoin</button>
-</div>
+    <div class="glass-container">
+        <h1><i class="fas fa-database" style="margin-right: 15px;"></i>ShellBag Forensics</h1>
+        <div class="subtitle">
+            Детализация записи ShellBag <br> 
+            <span style="font-size: 0.9rem; opacity: 0.8;">Windows Explorer MRU / BagMRU информация</span>
+        </div>
 
-<div id="donates" class="tab-content">
-  <h2>Донаты</h2>
-  <div class="donate-links">
-    <div class="donate-item"><b>Pixel</b><b>25грн</b><a href="https://send.monobank.ua/jar/9Wmu4EN7Ut?a=25" target="_blank">купить</a></div>
-    <div class="donate-item"><b>Magister</b><b>40грн</b><a href="https://send.monobank.ua/jar/A62xQvyyWo?a=40" target="_blank">купить</a></div>
-    <div class="donate-item"><b>Space</b><b>100грн</b><a href="https://send.monobank.ua/jar/4TLT26Tb9b?a=100" target="_blank">купить</a></div>
-    <div class="donate-item"><b>Forest</b><b>155грн</b><a href="https://send.monobank.ua/jar/4TLT26Tb9b?a=155" target="_blank">купить</a></div>
-    <div class="donate-item"><b>Legenda</b><b>250грн</b><a href="https://send.monobank.ua/jar/73EaKH2SUT?a=250" target="_blank">купить</a></div>
-  </div>
-</div>
+        <div class="details">
+            <pre>
+📁 ShellBag entry: 
+   Path: C:\Users\Agent\Desktop\Проект_Омега
+   Bag ID: 0x43f2a1b8
+   MRU Position: 3
+   Last accessed: 2025-03-17 23:14:22 UTC
+   Created: 2025-01-05 09:42:17
+   Attributes: Directory, NotHidden, System
+   Shell item type: 0x1f (Folder)
+   Localized name: "Omega Protocol"
+   Volume: Local Disk (C:)
+   Cluster: 0x000000003f2a1c91
+            </pre>
+        </div>
 
-<div id="suhariki" class="tab-content">
-  <h2>Forestcoin</h2>
-  <div class="donate-links">
-    <div class="donate-item">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/%D0%9F%D1%88%D0%B5%D0%BD%D0%B8%D1%87%D0%BD%D1%8B%D0%B5_%D1%81%D1%83%D1%85%D0%B0%D1%80%D0%B8%D0%BA%D0%B8.jpg" alt="Forestcoin">
-      <b>Forestcoin (дон валюта)</b>
-      <b>1грн (2 Forestcoin)</b>
-      <a href="https://send.monobank.ua/jar/4PBJdqbrnT" target="_blank">купить</a>
+        <div class="button-group">
+            <button class="glass-btn btn-download" id="downloadBtn">
+                <i class="fas fa-cloud-download-alt"></i> Скачать .bag
+            </button>
+        </div>
+
+        <div class="button-group" style="justify-content: space-around;">
+            <a href="#" class="glass-btn btn-telegram" target="_blank"><i class="fab fa-telegram-plane"></i> Telegram</a>
+            <a href="#" class="glass-btn btn-discord" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+            <a href="#" class="glass-btn btn-github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="#" class="glass-btn btn-twitter" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+            <a href="#" class="glass-btn btn-instagram" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        </div>
+
+        <div class="footer-note">
+            ✦ эстетика дождя и стекла ✦ shellbag memory ✦
+        </div>
     </div>
-  </div>
-</div>
 
-<footer>
-  <div class="socials">
-    <a href="https://t.me/твій_телеграм" target="_blank">Telegram</a>
-    <a href="https://discord.gg/EgPMHSeSgA" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: red; color: white; font-weight: bold; text-decoration: none; border-radius: 5px;">
-      наш дискорд канал
-    </a>
-    <a href="https://instagram.com/твій_інстаграм" target="_blank">Instagram</a>
-  </div>
-  <div class="footer-ip">ВНИМАНИЯ перед покупкой укажите свой ник и донат (количество)</div>
-  <div class="footer-ip">если вы не укажите донат не проидет</div>
-  <div class="footer-ip">IP сервера: <b>ForestBox.gomc.fun</b> | Версия: 1.16.5</div>
-</footer>
+    <script>
+        (function() {
+            // ДОЖДЬ
+            const rainContainer = document.getElementById('rain');
+            for (let i = 0; i < 100; i++) {
+                const drop = document.createElement('div');
+                drop.classList.add('raindrop');
+                drop.style.left = Math.random() * 100 + '%';
+                drop.style.animation = `fall ${0.8 + Math.random() * 1.2}s linear ${Math.random() * 3}s infinite`;
+                drop.style.height = (60 + Math.random() * 80) + 'px';
+                drop.style.opacity = 0.2 + Math.random() * 0.3;
+                rainContainer.appendChild(drop);
+            }
 
+            // СКАЧУВАННЯ ФАЙЛУ (ДЛЯ GITHUB)
+            function downloadBagFile() {
+                // ⚡⚡⚡ ТУТ ТРЕБА ВСТАВИТИ СВІЙ ШЛЯХ ⚡⚡⚡
+                // Варіант А: файл в тому ж репозиторії
+                const filePath = 'shellbag';  // або 'shellbag.dat' якщо є розширення
+                
+                // Варіант Б: або пряме посилання з GitHub (закоментовано)
+                // const filePath = 'https://raw.githubusercontent.com/ТВІЙ_ЛОГІН/НАЗВА_РЕПО/БРАНЧ/ІМЯ_ФАЙЛУ';
+                
+                fetch(filePath)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Файл не знайдено');
+                        return response.blob();
+                    })
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'shellbag_export.dat';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        window.URL.revokeObjectURL(url);
+                    })
+                    .catch(error => {
+                        alert('Файл shellbag не знайдено! Переконайся, що він є в репозиторії GitHub.');
+                        console.error(error);
+                    });
+            }
+
+            document.getElementById('downloadBtn').addEventListener('click', downloadBagFile);
+        })();
+    </script>
 </body>
 </html>
-
