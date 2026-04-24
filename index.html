@@ -1,236 +1,391 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShellBag Aesthetics</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            background: radial-gradient(circle at 20% 30%, #1a3a4a, #0b1a24);
-            position: relative;
-            overflow-x: hidden;
-            color: #e0f0ff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cool-Down Visual — Minecraft Mod</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .rain {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #111827;
+    --bg3: #1a2235;
+    --accent: #4ade80;
+    --accent2: #22d3ee;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --border: rgba(255,255,255,0.08);
+    --card: rgba(255,255,255,0.04);
+  }
 
-        .raindrop {
-            position: absolute;
-            width: 2px;
-            height: 100px;
-            background: linear-gradient(transparent, rgba(255, 255, 255, 0.6));
-            border-radius: 0 0 5px 5px;
-            animation: fall linear infinite;
-            opacity: 0.4;
-        }
+  html { scroll-behavior: smooth; }
 
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
-        }
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-        .glass-container {
-            position: relative;
-            z-index: 10;
-            max-width: 1100px;
-            margin: 50px auto;
-            padding: 40px;
-            background: rgba(20, 40, 50, 0.25);
-            backdrop-filter: blur(15px) saturate(180%);
-            -webkit-backdrop-filter: blur(15px) saturate(180%);
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-            transition: all 0.3s ease;
-        }
+  /* GRID BG */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(74,222,128,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,222,128,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 0.2rem;
-            font-weight: 400;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            letter-spacing: 2px;
-        }
+  .wrap { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 24px; }
 
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-top: 0;
-            margin-bottom: 2rem;
-            border-left: 3px solid #8ec9e0;
-            padding-left: 20px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 0 30px 30px 0;
-            line-height: 1.6;
-        }
+  /* NAV */
+  nav {
+    position: sticky; top: 0;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 14px 0;
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo {
+    font-size: 15px; font-weight: 600; letter-spacing: 0.5px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform: scale(1); }
+    50% { opacity:0.5; transform: scale(1.4); }
+  }
+  .nav-badge {
+    font-size: 11px; font-family: 'JetBrains Mono', monospace;
+    background: rgba(74,222,128,0.12); color: var(--accent);
+    border: 1px solid rgba(74,222,128,0.25);
+    padding: 3px 10px; border-radius: 20px;
+  }
 
-        .details {
-            background: rgba(10, 20, 25, 0.5);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 30px;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 15px 25px rgba(0,0,0,0.4);
-        }
+  /* HERO */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+  }
+  .hero-icon {
+    width: 80px; height: 80px;
+    background: rgba(74,222,128,0.1);
+    border: 1px solid rgba(74,222,128,0.25);
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px;
+    font-size: 36px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    font-size: 17px; color: var(--muted);
+    max-width: 480px; margin: 0 auto 36px;
+    line-height: 1.6;
+  }
 
-        .details pre {
-            color: #c0e4ff;
-            font-family: 'Courier New', monospace;
-            font-size: 1rem;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            background: rgba(0, 10, 15, 0.6);
-            padding: 20px;
-            border-radius: 20px;
-            border: 1px solid #3e6b7e;
-            text-shadow: 0 2px 5px black;
-        }
+  /* BADGES ROW */
+  .badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center; margin-bottom: 40px;
+  }
+  .badge {
+    font-size: 12px; font-family: 'JetBrains Mono', monospace;
+    padding: 5px 14px; border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: var(--card);
+  }
+  .badge.green { background: rgba(74,222,128,0.1); color: var(--accent); border-color: rgba(74,222,128,0.25); }
+  .badge.cyan { background: rgba(34,211,238,0.1); color: var(--accent2); border-color: rgba(34,211,238,0.25); }
 
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 30px 0 20px;
-            justify-content: center;
-        }
+  /* DOWNLOAD BTN */
+  .btn-download {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent); color: #0a0e1a;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px; font-weight: 700;
+    padding: 14px 32px; border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.15s, background 0.15s;
+    cursor: pointer; border: none;
+  }
+  .btn-download:hover { background: #86efac; transform: translateY(-2px); }
+  .btn-download:active { transform: translateY(0); }
+  .btn-download svg { width: 18px; height: 18px; flex-shrink: 0; }
 
-        .glass-btn {
-            padding: 14px 30px;
-            border: none;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 50px;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            text-decoration: none;
-            letter-spacing: 0.5px;
-        }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--muted);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 500;
+    padding: 13px 24px; border-radius: 12px;
+    border: 1px solid var(--border);
+    text-decoration: none; margin-left: 12px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .btn-secondary:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
 
-        .glass-btn i {
-            font-size: 1.4rem;
-        }
+  /* STATS */
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin: 56px 0;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-card .num {
+    font-size: 26px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+  }
+  .stat-card .label { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
-        .glass-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-5px);
-            border-color: #b0e6ff;
-            box-shadow: 0 15px 30px rgba(0, 150, 200, 0.4);
-        }
+  /* SECTION */
+  section { padding: 48px 0; border-top: 1px solid var(--border); }
+  .section-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 2px;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 24px;
+  }
 
-        .btn-download {
-            background: rgba(70, 130, 180, 0.5);
-            border: 1px solid #8ec9e0;
-            font-size: 1.5rem;
-            padding: 18px 45px;
-        }
+  /* FEATURES GRID */
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .feature-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px 20px 18px;
+  }
+  .feature-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(74,222,128,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; margin-bottom: 14px;
+  }
+  .feature-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .feature-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
 
-        .btn-telegram {
-            background: rgba(0, 136, 204, 0.3);
-        }
-        .btn-discord {
-            background: rgba(88, 101, 242, 0.3);
-        }
-        .btn-github {
-            background: rgba(36, 41, 46, 0.4);
-        }
-        .btn-twitter {
-            background: rgba(29, 161, 242, 0.3);
-        }
-        .btn-instagram {
-            background: rgba(225, 48, 108, 0.3);
-        }
+  /* REQUIREMENTS */
+  .req-list { display: flex; flex-direction: column; gap: 12px; }
+  .req-row {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 18px;
+  }
+  .req-row .req-label { font-size: 13px; color: var(--muted); }
+  .req-row .req-val {
+    font-size: 13px; font-family: 'JetBrains Mono', monospace;
+    font-weight: 600; color: var(--text);
+    background: rgba(255,255,255,0.06); padding: 3px 12px; border-radius: 8px;
+  }
+  .req-row .req-val.warn { color: #fbbf24; background: rgba(251,191,36,0.1); }
 
-        .footer-note {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 0.9rem;
-            opacity: 0.7;
-            background: rgba(0,0,0,0.2);
-            border-radius: 40px;
-            padding: 10px;
-        }
+  /* INSTALL STEPS */
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step { display: flex; gap: 16px; align-items: flex-start; }
+  .step-num {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(74,222,128,0.15); border: 1px solid rgba(74,222,128,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--accent);
+  }
+  .step-body h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .step-body p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .step-body code {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    background: rgba(255,255,255,0.07); padding: 2px 8px; border-radius: 6px;
+    color: var(--accent2);
+  }
 
-        @media (max-width: 700px) {
-            .glass-container { margin: 20px; padding: 25px; }
-            h1 { font-size: 2.2rem; }
-        }
-    </style>
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    text-align: center;
+  }
+  footer p { font-size: 13px; color: var(--muted); }
+  footer span { color: var(--accent); }
+
+  @media (max-width: 520px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .btn-secondary { margin-left: 0; margin-top: 10px; }
+    .hero { padding: 48px 0 40px; }
+  }
+</style>
 </head>
 <body>
 
-    <div class="rain" id="rain"></div>
+<nav>
+  <div class="wrap">
+    <div class="nav-logo">
+      <div class="dot"></div>
+      Cool-Down Visual
+    </div>
+    <span class="nav-badge">v1.0.0</span>
+  </div>
+</nav>
 
-    <div class="glass-container">
-        <h1><i class="fas fa-database" style="margin-right: 15px;"></i>ShellBag Forensics</h1>
-        <div class="subtitle">
-            Детализация записи ShellBag <br> 
-            <span style="font-size: 0.9rem; opacity: 0.8;">Windows Explorer MRU / BagMRU информация</span>
-        </div>
+<div class="wrap">
 
-        <div class="details">
-            <pre>
-📁 ShellBag  
-            </pre>
-        </div>
+  <div class="hero">
+    <div class="hero-icon">&#10052;</div>
+    <h1>Cool-Down <span>Visual</span></h1>
+    <p>Мод для Minecraft, що додає красиві візуальні ефекти кулдаунів прямо на екран.</p>
 
-        <div class="button-group">
-            <!-- КНОПКА ТЕПЕР ПРОСТО ВЕДЕ НА ТВІЙ GITHUB -->
-            <a href="https://drive.google.com/file/d/1XDIvQxUuQnm40blzkWMyELbCJkzgXdyB/view?pli=1" target="_blank" class="glass-btn btn-download" id="downloadBtn">
-                <i class="fas fa-cloud-download-alt"></i> Скачать shellbag
-            </a>
-        </div>
-
-        <div class="button-group" style="justify-content: space-around;">
-            <a href="#" class="glass-btn btn-telegram" target="_blank"><i class="fab fa-telegram-plane"></i> Telegram</a>
-            <a href="#" class="glass-btn btn-discord" target="_blank"><i class="fab fa-discord"></i> Discord</a>
-            <a href="https://drive.google.com/file/d/1XDIvQxUuQnm40blzkWMyELbCJkzgXdyB/view?pli=1" class="glass-btn btn-github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-            <a href="#" class="glass-btn btn-twitter" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
-            <a href="#" class="glass-btn btn-instagram" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-        </div>
-
-        <div class="footer-note">
-            ✦ естетика дощу та скла ✦ shellbag memory ✦
-        </div>
+    <div class="badges">
+      <span class="badge green">Minecraft 1.16.5</span>
+      <span class="badge cyan">Forge</span>
+      <span class="badge">Java 17</span>
+      <span class="badge">Client-side</span>
+      <span class="badge green">Безкоштовно</span>
     </div>
 
-    <script>
-        (function() {
-            // ДОЩ
-            const rainContainer = document.getElementById('rain');
-            for (let i = 0; i < 100; i++) {
-                const drop = document.createElement('div');
-                drop.classList.add('raindrop');
-                drop.style.left = Math.random() * 100 + '%';
-                drop.style.animation = `fall ${0.8 + Math.random() * 1.2}s linear ${Math.random() * 3}s infinite`;
-                drop.style.height = (60 + Math.random() * 80) + 'px';
-                drop.style.opacity = 0.2 + Math.random() * 0.3;
-                rainContainer.appendChild(drop);
-            }
-        })();
-    </script>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:8px;">
+      <a href="cooldownvisuals-1.0.0.jar" download class="btn-download">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Завантажити мод
+      </a>
+      <a href="#install" class="btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        Як встановити
+      </a>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="num">1.16.5</div>
+      <div class="label">Версія Minecraft</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">Forge</div>
+      <div class="label">Mod loader</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">Java 17</div>
+      <div class="label">Потрібна версія Java</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-title">Можливості</div>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">&#9654;</div>
+        <h3>Візуальні кулдауни</h3>
+        <p>Красивий HUD що показує cooldown кожного предмету в реальному часі.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9881;</div>
+        <h3>Налаштування</h3>
+        <p>Зміни розмір, позицію та стиль відображення під себе.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9889;</div>
+        <h3>Легкий мод</h3>
+        <p>Не навантажує гру, працює лише на клієнті без потреби ставити на сервер.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9733;</div>
+        <h3>Vanilla-сумісний</h3>
+        <p>Сумісний з більшістю інших модів і модпаків для 1.16.5.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">Вимоги</div>
+    <div class="req-list">
+      <div class="req-row">
+        <span class="req-label">Minecraft</span>
+        <span class="req-val">1.16.5</span>
+      </div>
+      <div class="req-row">
+        <span class="req-label">Mod Loader</span>
+        <span class="req-val">Forge 36.2.x+</span>
+      </div>
+      <div class="req-row">
+        <span class="req-label">Java</span>
+        <span class="req-val warn">Java 17 (обов'язково)</span>
+      </div>
+      <div class="req-row">
+        <span class="req-label">Сторона</span>
+        <span class="req-val">Тільки клієнт</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="section-title">Встановлення</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Встанови Java 17</h4>
+          <p>Завантаж та встанови <code>Java 17</code> з офіційного сайту adoptium.net</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Встанови Minecraft Forge</h4>
+          <p>Завантаж Forge для версії <code>1.16.5</code> з files.minecraftforge.net і запусти інсталятор.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Скинь мод у папку mods</h4>
+          <p>Завантаж <code>cooldownvisuals-1.0.0.jar</code> і поклади у папку <code>.minecraft/mods/</code></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Запускай гру</h4>
+          <p>Вибери профіль <code>Forge 1.16.5</code> у лаунчері та запускай!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>Зроблено з <span>&#9829;</span> &nbsp;·&nbsp; Cool-Down Visual &nbsp;·&nbsp; Minecraft 1.16.5 Forge</p>
+  </div>
+</footer>
+
 </body>
 </html>
-
